@@ -4,42 +4,49 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --ring: 0 0% 83.1%;
-    --radius: 0.5rem;
+    --background: 220 20% 4%;
+    --foreground: 210 20% 95%;
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 160 84% 39%;
+    --accent-foreground: 160 100% 95%;
+    --popover: 220 20% 6%;
+    --popover-foreground: 210 20% 95%;
+    --border: 220 15% 14%;
+    --input: 220 15% 14%;
+    --card: 220 20% 6%;
+    --card-foreground: 210 20% 95%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 220 20% 4%;
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 210 20% 95%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 160 84% 39%;
+    --radius: 0.75rem;
 
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
+    --chart-1: 160 84% 39%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 220 70% 50%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --gamba-ui-border-radius: 0.5rem;
-    --gamba-ui-button-default-background: #171717;
-    --gamba-ui-button-default-background-hover: #171717;
-    --gamba-ui-button-default-color: white;
-    --gamba-ui-button-main-background: #171717;
-    --gamba-ui-button-main-background-hover: #171717;
-    --gamba-ui-input-background: #e5e5e5;
-    --gamba-ui-input-color: #171717;
-    --gamba-ui-input-background-hover: #11111d;
+    --gamba-ui-border-radius: 0.75rem;
+    --gamba-ui-button-default-background: hsl(220, 15%, 12%);
+    --gamba-ui-button-default-background-hover: hsl(220, 15%, 16%);
+    --gamba-ui-button-default-color: hsl(210, 20%, 95%);
+    --gamba-ui-button-main-background: hsl(160, 84%, 39%);
+    --gamba-ui-button-main-background-hover: hsl(160, 84%, 45%);
+    --gamba-ui-input-background: hsl(220, 15%, 10%);
+    --gamba-ui-input-color: hsl(210, 20%, 95%);
+    --gamba-ui-input-background-hover: hsl(220, 15%, 14%);
+
+    --surface: 220 18% 8%;
+    --surface-elevated: 220 16% 11%;
+    --gold: 38 92% 50%;
+    --gold-foreground: 38 92% 15%;
+    --success: 160 84% 39%;
+    --success-foreground: 160 100% 95%;
   }
 }
 
@@ -52,12 +59,22 @@
   }
 }
 
+/* Scrollbar */
 body::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: hsl(220, 20%, 4%);
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #9564ff;
+  background: hsl(160, 84%, 39%);
+  border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: hsl(160, 84%, 50%);
 }
 
 .modal::-webkit-scrollbar {
@@ -65,7 +82,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .modal::-webkit-scrollbar-thumb {
-  background-color: #9564ff;
+  background-color: hsl(160, 84%, 39%);
+  border-radius: 2px;
 }
 
 @layer utilities {
@@ -83,6 +101,32 @@ body::-webkit-scrollbar-thumb {
 .overflow-x-auto {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Glass morphism utility */
+.glass {
+  background: hsla(220, 20%, 8%, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid hsla(220, 15%, 20%, 0.3);
+}
+
+.glass-strong {
+  background: hsla(220, 20%, 6%, 0.85);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid hsla(220, 15%, 20%, 0.4);
+}
+
+/* Glow effects */
+.glow-emerald {
+  box-shadow: 0 0 20px hsla(160, 84%, 39%, 0.15),
+    0 0 60px hsla(160, 84%, 39%, 0.05);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px hsla(38, 92%, 50%, 0.15),
+    0 0 60px hsla(38, 92%, 50%, 0.05);
 }
 
 /* splash game styles */
@@ -140,18 +184,18 @@ body::-webkit-scrollbar-thumb {
 /* Recent plays skeleton pulse */
 @keyframes Skeleton {
   0% {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.6);
+    opacity: 0.4;
+    background-color: hsl(220, 15%, 12%);
   }
 
   50% {
-    opacity: 0.5;
-    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 0.7;
+    background-color: hsl(220, 15%, 16%);
   }
 
   100% {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.6);
+    opacity: 0.4;
+    background-color: hsl(220, 15%, 12%);
   }
 }
 
@@ -172,28 +216,28 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Game stepper animation */
-@keyframes purplePulse {
+@keyframes emeraldPulse {
   0% {
     opacity: 1;
-    background-color: rgba(149, 76, 233, 0.6);
+    background-color: hsl(160, 84%, 39%);
   }
 
   50% {
-    opacity: 0.7;
-    background-color: rgba(75, 0, 130, 0.8);
+    opacity: 0.6;
+    background-color: hsl(160, 84%, 30%);
   }
 
   100% {
     opacity: 1;
-    background-color: rgba(149, 76, 233, 0.6);
+    background-color: hsl(160, 84%, 39%);
   }
 }
 
 .animate-purplePulse {
-  animation: purplePulse 1.5s cubic-bezier(0.2, 0, 0.2, 1) infinite;
+  animation: emeraldPulse 1.5s cubic-bezier(0.2, 0, 0.2, 1) infinite;
 }
 
-/* Dashbaord gamecard styles */
+/* Game card styles */
 @keyframes tileAnimation {
   0% {
     background-position: -100px 100px;
@@ -205,7 +249,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .game-card {
-  transition: transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   transform: scale(1);
   max-height: 100%;
@@ -215,26 +259,28 @@ body::-webkit-scrollbar-thumb {
   align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
+  border-radius: 0.75rem;
 }
 
 .game-card:hover {
-  transform: scale(1.01);
-  outline: #9564ff33 solid 5px;
-  outline-offset: 0px;
+  transform: scale(1.03);
+  box-shadow: 0 0 30px hsla(160, 84%, 39%, 0.15),
+    0 8px 32px hsla(0, 0%, 0%, 0.4);
 }
 
 .game-card .background {
-  transition: transform 0.2s ease, opacity 0.3s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease;
   animation: tileAnimation 5s linear infinite;
   opacity: 0;
 }
 
 .game-card:hover .background {
-  opacity: 0.35;
+  opacity: 0.25;
 }
 
 .game-card .image {
-  transition: transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(0.9);
 }
 
@@ -243,7 +289,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .game-card .play {
-  transition: opacity 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   backdrop-filter: blur(20px);
 }
@@ -292,14 +338,37 @@ body::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.3);
   z-index: 50;
   pointer-events: none;
-  border-radius: 10px;
+  border-radius: 0.75rem;
 }
 
-@layer base {
-  * {
-    @apply border-border;
+/* Ambient glow animation for hero */
+@keyframes ambientGlow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
   }
-  body {
-    @apply bg-background text-foreground;
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
   }
+}
+
+.animate-ambient-glow {
+  animation: ambientGlow 8s ease-in-out infinite;
+}
+
+/* Subtle float animation */
+@keyframes subtleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: subtleFloat 6s ease-in-out infinite;
 }

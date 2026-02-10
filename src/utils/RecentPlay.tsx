@@ -50,63 +50,72 @@ export function RecentPlay({
   const { game, gameNameFallback, isFallback } = extractMetadata(event);
 
   return (
-    <div className="flex items-center justify-between w-full gap-4 md:gap-6">
-      <div className="flex items-center justify-center gap-2">
+    <div className="flex items-center justify-between w-full gap-3 md:gap-5">
+      {/* Game icon */}
+      <div className="flex items-center gap-2.5 shrink-0">
         {!isFallback ? (
           <img
             src={`/games/${game.id}/logo.png`}
-            alt={`${game?.meta?.name} Splash`}
-            className="items-center justify-center"
-            width="60px"
+            alt={`${game?.meta?.name}`}
+            className="h-10 w-10 rounded-lg object-cover ring-1 ring-border"
           />
         ) : (
           <img
             src="/logo.svg"
-            alt={`${gameNameFallback} Splash`}
-            className="items-center justify-center"
-            width="60px"
+            alt={`${gameNameFallback}`}
+            className="h-10 w-10 rounded-lg object-contain p-1 bg-muted ring-1 ring-border"
           />
         )}
       </div>
-      <div
-        className="flex items-center justify-center gap-2"
-        style={{ color: "#a079ff" }}
-      >
-        {`${data.user.toBase58().substring(0, 4)}...${data.user
-          .toBase58()
-          .slice(-4)}`}
+
+      {/* Player address */}
+      <div className="text-xs font-mono text-muted-foreground hidden sm:block">
+        {`${data.user.toBase58().substring(0, 4)}...${data.user.toBase58().slice(-4)}`}
       </div>
-      <div className="flex items-center justify-center gap-2">
+
+      {/* Win/Loss label */}
+      <div className={`text-xs font-semibold uppercase tracking-wider ${profit >= 0 ? "text-primary" : "text-destructive"}`}>
         {profit >= 0 ? "WON" : "LOST"}
       </div>
+
+      {/* Amount */}
       <div
-        className="flex gap-2 items-center justify-center rounded-lg p-1"
-        style={{ backgroundColor: profit > 0 ? "#34D399" : "#666" }}
+        className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-sm font-semibold ${
+          profit > 0
+            ? "bg-primary/10 text-primary border border-primary/20"
+            : "bg-muted text-muted-foreground border border-border"
+        }`}
       >
         {token.image ? (
           <img
             src={token.image}
             alt="Token"
-            width={24}
-            className="rounded-full flex-shrink-0"
+            width={18}
+            height={18}
+            className="rounded-full shrink-0"
           />
         ) : (
-          <span className="inline-block w-6 h-6 border border-white rounded-full flex items-center justify-center text-xs font-medium text-white">
+          <span className="inline-flex items-center justify-center w-[18px] h-[18px] border border-muted-foreground rounded-full text-[10px] font-medium text-muted-foreground">
             {token.symbol}
           </span>
         )}
         <TokenValue amount={Math.abs(profit)} mint={data.tokenMint} />
       </div>
-      <div className="hidden md:flex flex-col items-center justify-center">
-        {profit > 0 && <div>({multiplier.toFixed(2)}x)</div>}
+
+      {/* Multiplier */}
+      <div className="hidden md:flex flex-col items-center">
+        {profit > 0 && (
+          <span className="text-xs font-medium text-muted-foreground">
+            ({multiplier.toFixed(2)}x)
+          </span>
+        )}
         {data.jackpotPayoutToUser.toNumber() > 0 && (
-          <div className="animate-jackpotGradient flex gap-2 items-center text-black rounded-lg p-1">
-            +
-            <TokenValue
+          <span className="text-xs font-bold text-gold flex items-center gap-1">
+            +<TokenValue
               mint={data.tokenMint}
               amount={data.jackpotPayoutToUser.toNumber()}
             />
-          </div>
+          </span>
         )}
       </div>
     </div>

@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useReferral } from "gamba-react-ui-v2";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { ArrowUpRight, Copy, BookOpen, Compass, MessageCircle, Code2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   const walletModal = useWalletModal();
@@ -22,83 +24,107 @@ export default function HomePage() {
     );
   };
 
+  const quickLinks = [
+    {
+      icon: Code2,
+      label: "Build your own",
+      href: "https://github.com/BankkRoll/Gamba-V2-Next.js",
+    },
+    {
+      icon: BookOpen,
+      label: "Gamba Docs",
+      href: "https://gamba.so/docs",
+    },
+    {
+      icon: Compass,
+      label: "Explorer",
+      href: "https://explorer.gamba.so",
+    },
+    {
+      icon: MessageCircle,
+      label: "Discord",
+      href: "https://discord.com/invite/HSTtFFwR",
+    },
+  ];
+
   return (
     <>
-      <div className="relative mx-auto flex flex-col gap-5 mt-20 pb-10 px-2.5 transition-all duration-250 ease-in-out sm:px-5 sm:pt-5 md:max-w-6xl">
-        <div className="relative overflow-hidden flex flex-col items-center justify-center p-4 rounded-lg lg:grid lg:grid-cols-3 gap-4 lg:p-10 bg-transparent">
-          <div
-            style={{
-              backgroundImage: "url(/seo.png)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              transform: "perspective(800px) rotateX(40deg)",
-              transformOrigin: "top center",
-              zIndex: -1,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent opacity-10 transform rotate-12 scale-150 blur-xl pointer-events-none"></div>
+      <div className="relative mx-auto flex flex-col gap-8 mt-20 pb-16 px-4 transition-all duration-300 ease-in-out sm:px-6 md:max-w-7xl">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden rounded-2xl border border-border bg-card">
+          {/* Ambient glow effects */}
+          <div className="absolute -top-32 -left-32 w-64 h-64 bg-primary/10 rounded-full blur-[100px] animate-ambient-glow pointer-events-none" />
+          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-gold/10 rounded-full blur-[100px] animate-ambient-glow pointer-events-none" style={{ animationDelay: "4s" }} />
 
-          <div className="bg-[#15152e]/80 rounded-lg p-4 lg:col-span-2 text-center lg:text-left">
-            <div className=" flex items-center justify-center md:justify-start">
-              <h1 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md">
-                Welcome to Gamba
-              </h1>
-              <img src="/wave.gif" className="h-14" alt="Gamba Logo" />
+          <div className="relative p-6 sm:p-8 lg:p-12">
+            <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12">
+              {/* Left content */}
+              <div className="flex-1 space-y-5">
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-xs font-medium text-primary uppercase tracking-wider">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  Live on Solana
+                </div>
+
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
+                  Welcome to Gamba
+                </h1>
+
+                <p className="text-base sm:text-lg text-muted-foreground max-w-lg leading-relaxed">
+                  The gambleFi protocol with end-to-end tools for on-chain
+                  degeneracy on Solana.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-start gap-3 pt-2">
+                  <Button
+                    onClick={handleCopyInvite}
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-6 transition-all duration-200 hover:shadow-lg hover:shadow-primary/20"
+                  >
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy Referral Link
+                  </Button>
+                  <p className="text-xs text-muted-foreground mt-1 sm:mt-2">
+                    Earn {PLATFORM_REFERRAL_FEE * 100}% on each play via your referral
+                  </p>
+                </div>
+              </div>
+
+              {/* Right quick links */}
+              <div className="grid grid-cols-2 gap-3 lg:w-[280px] shrink-0">
+                {quickLinks.map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => window.open(link.href)}
+                    className="group flex flex-col items-start gap-2 rounded-xl border border-border bg-surface-elevated p-4 transition-all duration-200 hover:border-primary/30 hover:bg-muted/60 hover:shadow-lg hover:shadow-primary/5"
+                  >
+                    <link.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors flex items-center gap-1">
+                      {link.label}
+                      <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
-            <p className="my-2 text-white drop-shadow">
-              The gambleFi protocol with end-to-end tools for on-chain
-              degeneracy on Solana.
-            </p>
-            <p className="my-2 text-sm max-w-sm">
-              Share your link to earn a {PLATFORM_REFERRAL_FEE * 100}% fee on
-              each play when players use this platform using your code.
-            </p>
-            <button
-              className="bg-[#8851ff] hover:bg-[#9564ff] rounded-lg p-2 text-xs bg-"
-              onClick={handleCopyInvite}
-            >
-              Copy Link
-            </button>
           </div>
-          <div className="whitespace-nowrap grid grid-cols-2 grid-rows-2 gap-2 mt-5 md:flex md:flex-col md:mt-0 md:justify-start">
-            <button
-              onClick={() =>
-                window.open("https://github.com/BankkRoll/Gamba-V2-Next.js")
-              }
-              className="rounded-lg p-3 bg-white hover:bg-gray-200 hover:-translate-y-0.5 transform text-black transition-all duration-200 ease-in-out cursor-pointer shadow-lg hover:shadow-xl"
-            >
-              👨‍💻 Build your own
-            </button>
-            <button
-              onClick={() => window.open("https://gamba.so/docs")}
-              className="rounded-lg p-3 bg-white hover:bg-gray-200 hover:-translate-y-0.5 transform text-black transition-all duration-200 ease-in-out cursor-pointer shadow-lg hover:shadow-xl"
-            >
-              📖 Gamba Docs
-            </button>
-            <button
-              onClick={() => window.open("https://explorer.gamba.so")}
-              className="rounded-lg p-3 bg-white hover:bg-gray-200 hover:-translate-y-0.5 transform text-black transition-all duration-200 ease-in-out cursor-pointer shadow-lg hover:shadow-xl"
-            >
-              🌐 Explorer
-            </button>
-            <button
-              onClick={() => window.open("https://discord.com/invite/HSTtFFwR")}
-              className="rounded-lg p-3 bg-white hover:bg-gray-200 hover:-translate-y-0.5 transform text-black transition-all duration-200 ease-in-out cursor-pointer shadow-lg hover:shadow-xl"
-            >
-              💬 Join Discord
-            </button>
+        </section>
+
+        {/* Games Section */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground">Games</h2>
+            <div className="h-px flex-1 bg-border" />
           </div>
-        </div>
-        <h2 className="text-2xl font-bold text-center">Games</h2>
-        <GameGrid />
-        <h2 className="text-2xl font-bold text-center">Recent Plays</h2>
-        <RecentPlays />
+          <GameGrid />
+        </section>
+
+        {/* Recent Plays Section */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground">Recent Plays</h2>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+          <RecentPlays />
+        </section>
       </div>
     </>
   );
